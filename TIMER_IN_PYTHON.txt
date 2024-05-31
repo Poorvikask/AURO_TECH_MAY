@@ -1,0 +1,50 @@
+import time
+
+class Timer:
+    def __init__(self):
+        self.start_time = None
+        self.is_running = False
+
+    def start_stopwatch(self):
+        if not self.is_running:
+            self.start_time = time.time()
+            self.is_running = True
+            print("Stopwatch started.")
+        else:
+            elapsed_time = time.time() - self.start_time
+            print("Elapsed time: {:.2f} seconds".format(elapsed_time))
+
+    def start_countdown_timer(self, duration):
+        print("Countdown timer started for {} seconds.".format(duration))
+        self.start_time = time.time()
+        while True:
+            elapsed_time = time.time() - self.start_time
+            remaining_time = duration - elapsed_time
+            if remaining_time <= 0:
+                print("Time's up!")
+                break
+            print("\rTime remaining: {:.2f} seconds".format(remaining_time), end="")
+            time.sleep(0.1)
+
+def main():
+    timer = Timer()
+    while True:
+        print("\nTimer Menu:")
+        print("1. Stopwatch")
+        print("2. Countdown Timer")
+        print("3. Exit")
+        choice = input("Enter your choice (1/2/3): ")
+        
+        if choice == "1":
+            timer.start_stopwatch()
+        elif choice == "2":
+            duration = int(input("Enter duration in seconds: "))
+            timer.start_countdown_timer(duration)
+        elif choice == "3":
+            print("Exiting...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if __name__ == "__main__":
+    main()
