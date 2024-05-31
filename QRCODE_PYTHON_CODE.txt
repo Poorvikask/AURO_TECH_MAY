@@ -1,0 +1,44 @@
+!pip install qrcode[pil]
+
+# Define the QR code generation function
+import qrcode
+from PIL import Image
+
+def generate_qr_code(data, output_file):
+    """
+    Generates a QR code for the given data and saves it as an image file.
+
+    :param data: The data to encode in the QR code (e.g., URL, text).
+    :param output_file: The path to the output image file (e.g., 'qrcode.png').
+    """
+    # Create a QR Code instance
+    qr = qrcode.QRCode(
+        version=1,  # Version 1 means a 21x21 matrix
+        error_correction=qrcode.constants.ERROR_CORRECT_L,  # About 7% error correction
+        box_size=10,  # Each box is 10x10 pixels
+        border=4,  # Border size of 4 boxes
+    )
+
+    # Add data to the QR code
+    qr.add_data(data)
+    qr.make(fit=True)  # Adjust the size to fit the data
+
+    # Create an image from the QR Code instance
+    img = qr.make_image(fill_color="black", back_color="white")
+
+    # Save the image to a file
+    img.save(output_file)
+    print(f"QR code generated and saved as {output_file}")
+
+#Generate and display the QR code
+# Example data to encode
+data = input("Enter the data to encode in the QR code: ")
+output_file = "qrcode.png"
+
+# Generate the QR code
+generate_qr_code(data, output_file)
+
+# Display the generated QR code
+from IPython.display import Image as IPImage
+IPImage(output_file)
+
